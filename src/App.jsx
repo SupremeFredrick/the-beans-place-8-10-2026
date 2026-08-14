@@ -54,6 +54,7 @@
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
 import HeroSection from "./components/HeroSection";
+import FooterSection from "./components/FooterSection";
 
 export default function App() {
     return (
@@ -80,7 +81,9 @@ export default function App() {
             {/* CONTACT */}
             <section className="bg-cta" id="contact"></section>
             {/* FOOTER */}
-            <section className="bg-footer"></section>
+            <section className="bg-footer">
+                <FooterSection />
+            </section>
         </div>
     );
 }
