@@ -55,12 +55,13 @@
 /* --- YOUR COMPONENT CODE GOES HERE --- */
 import HeroSection from "./components/HeroSection";
 import FooterSection from "./components/FooterSection";
+import NavBar from "./components/NavBar"
 
 export default function App() {
     return (
         <div className="app">
             {/* NAVBAR */}
-
+            <NavBar />
             {/* HERO */}
             <section className="hero bg-hero">
                 <div className="hero-grid">
