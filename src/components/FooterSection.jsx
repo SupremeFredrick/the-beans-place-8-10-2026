@@ -154,7 +154,7 @@ function XIcon(props) {
                 if (mapInstance.current || !mapRef.current) return;
                 //cords
                 const lat = 39.7386;
-                const lng = 104.3256;
+                const lng = -104.3256;
                 //creates map
                 const map= L.map(mapRef.current, {
                     center: [lat,lng],

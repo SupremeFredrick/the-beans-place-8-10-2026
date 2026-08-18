@@ -23,7 +23,7 @@
 // STEP 1: Import motion from "framer-motion"
 
 /* --- YOUR IMPORTS GO HERE --- */
-
+import {motion} from "framer-motion"
 
 // STEP 2: Create and export the RibbonTicker component
 // export default function RibbonTicker() { ... }
@@ -66,3 +66,42 @@
 // Look for the @keyframes ribbon-scroll rule.
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
+export default function RibbonTicker(){
+    const blends = [
+        "Jamaican Blue Mountain", "Yirgacheffe", "Tanzania Peaberry",
+    "Panama Geisha", "Vietnamese Robusta", "Brazilian Santos",
+    "Costa Rica Tarrazu", "Guatemala Antigua", "Kenya AA",
+    "Sumatra Mandheling", "Kona", "Colombian Supremo",
+    "Ethiopian Harrar", "Arabian Mocha", "Red Sulawesi"
+    ]
+    // "..." copies arrays items so listing the blends twice
+    // css scrolls left by exactly half width and snaps back - identical second half, reset is invisble and the loop looks endless
+    
+    const items= [...blends, ...blends]
+    
+    return(
+        // outer contrainer - css clips whatever scrolls past the edges
+        <div className="ribbon-ticker-container">
+            <div className="ribbon-ticker">
+                {/* track is the strip that slides sideways */}
+                <div className="ribbon-track">
+                    
+                    {items.map((name,i)=>(
+                        <motion.span
+                        // index is a safe key here, list never reorders
+                        key={i}
+                        className="ribbon-item"
+                        // while hovered grow to 110% and turn amber
+                        whileHover={{scale:1.1, color:"#f0b955"}}
+                        // spring=bouncy rather than linear, higher stiffness is snappier
+                        transition={{type: "spring", stiffness: 300}}>
+                            {/* blend name plus a star seperator */}
+                            {name}<span className="ribbon-dot">✦</span>
+                        </motion.span>
+                    ))}
+                </div>
+            </div>
+        </div>
+        
+    )
+}
