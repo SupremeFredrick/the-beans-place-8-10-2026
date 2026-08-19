@@ -219,7 +219,7 @@ export default function FeaturesSection() {
                 -p * range * 0.7 //row 3:left, slower
             ]);
         };
-        // run once so the rows sit correctly before any scrolls
+        // run once so the rows sit correctly before any scrollsgit 
         handleScroll();
 
         // {passive: true} promise we wont block scrolling, keeping it smooth
