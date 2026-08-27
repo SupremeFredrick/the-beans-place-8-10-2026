@@ -24,9 +24,9 @@ export default function CartPanel({ open, onClose, onRequestSignIn }) {
               <button onClick={onClose} className="text-[var(--cream)]/80" aria-label="Close cart">✕</button>
             </div>
 
-            <div className="flex-1 overflow-auto p-4">
+            <div className="flex h-full items-center justify-center">
               {items.length === 0 ? (
-                <div className="text-sm text-[var(--cream)]/70">Your cart is empty</div>
+                <div className="text-lg text-[var(--cream)]/70">Nothing yet!</div>
               ) : (
                 <ul className="flex flex-col gap-4">
                   {items.map((it) => (
@@ -72,7 +72,7 @@ export default function CartPanel({ open, onClose, onRequestSignIn }) {
                 }}>Proceed to Checkout</Button>
 
                 <Button variant="ghost" className="w-full" onClick={() => onRequestSignIn && onRequestSignIn()}>
-                  Sign in to save cart
+                  Sign in
                 </Button>
               </div>
             </div>

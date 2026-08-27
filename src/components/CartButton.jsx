@@ -7,7 +7,7 @@ export default function CartButton({ onClick }) {
     <button
       id="cart-button"
       onClick={onClick}
-      className="relative inline-flex items-center gap-2 rounded-full px-3 py-1.5 bg-white/5 text-[var(--cream)]"
+      className="relative inline-flex items-center gap-2 rounded-full px-3 py-1.5 bg-black/5 text-[var(--amber)]"
       aria-haspopup="dialog"
       aria-label="Open cart"
     >
