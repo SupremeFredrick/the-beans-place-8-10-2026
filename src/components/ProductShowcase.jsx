@@ -115,6 +115,8 @@ import { div } from "framer-motion/client";
 //   </div>
 
 /* --- YOUR COMPONENT CODE GOES HERE --- */
+import { useCart } from "../contexts/CartContext";
+
 const products = [
     {
         name: "Ethiopian Harrar",
@@ -173,6 +175,7 @@ const products = [
 ];
 
 export default function ProductShowCase() {
+    const { addItem } = useCart();
     return (
         <div className="product-showcase">
             {/* header rising delay build it top to bottom */}
@@ -212,7 +215,7 @@ export default function ProductShowCase() {
                             whileHover={{ y: -8, transition: { duration: 0.25 } }}>
                             <div className="product-card-image">
                                 {/* lazt dont download until its near screen */}
-                                <img src={product.image} alt={product.name} laoding="lazy" />
+                                <img src={product.image} alt={product.name} loading="lazy" />
 
                                 {/* badge renders only when product has one */}
                                 {product.badge && (
@@ -232,7 +235,16 @@ export default function ProductShowCase() {
                                 </p>
 
                                 <p className="product-notes">{product.notes}</p>
-                                <Button variant="primary" size="sm" className="w-full mt-3">
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    className="w-full mt-3"
+                                    onClick={() => {
+                                        // price strings include $ — parseFloat to number
+                                        const numericPrice = parseFloat(product.price.replace(/[^0-9.-]+/g, "")) || 0;
+                                        addItem({ id: product.name.replace(/\s+/g, "-").toLowerCase(), name: product.name, price: numericPrice, image: product.image });
+                                    }}
+                                >
                                     Add to Cart
                                 </Button>
                             </div>

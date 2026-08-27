@@ -39,6 +39,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/Beans_logo.png";
 import Button from "./ui/Button";
 
+// NEW IMPORTS
+import CartButton from "./CartButton";
+import CartPanel from "./CartPanel";
+import SignInModal from "./SignInModal";
+
 // STEP 2: Create and export the NavBar component
 // export default function NavBar() { ... }
 //
@@ -100,6 +105,10 @@ export default function NavBar() {
     //user scrolled down? used to add a shadow
     const [scrolled, setScrolled] = useState(false);
 
+    // local UI state for cart + sign-in modals
+    const [cartOpen, setCartOpen] = useState(false);
+    const [signinOpen, setSigninOpen] = useState(false);
+
     // tiny helper so mobile links close when menu tapped
     const closeMenu = () => setMenuOpen(false);
     //watch page scroll position
@@ -118,6 +127,7 @@ export default function NavBar() {
     // note in JSX comments are written as {/* */}
 
     return (
+        <>
         <motion.header
             className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}
             // bar slides down into place upon first load
@@ -142,59 +152,51 @@ export default function NavBar() {
                     <a href="#about">Our Story</a>
                     <a href="#contact">Contact</a>
                 </nav>
-                {/* desktop CTA */}
-                <Button variant="accent" size="sm" className="hidden md:inline-flex">
-                    Order Now
-                </Button>
 
-                {/* mobile hamburger*/}
-                {/* "md:hidden" is opposite of above, button only exists on phones aria-* attributes tell screen readers what the button does and whether menu is currently open */}
-                <button
-                    type="button"
-                    aria-lable={menuOpen ? "Close menu" : "Open menu"}
-                    aria-expanded={menuOpen}
-                    // flip menu open/closed on each tap
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden">
-                    {/* 3 bars that morph into an x when menu is open */}
-                    {/* top bar slides dwn 21 units and rotates 45 degrees */}
-                    <span
-                        className={`block h-0.5 w-6 bg-black transition-all duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
-                    />
-                    {/* middle bar simply fades out so x only has 2 strokes */}
+                <div className="flex items-center gap-3">
+                  {/* desktop CTA */}
+                  <Button variant="accent" size="sm" className="hidden md:inline-flex">Order Now</Button>
 
-                    <span
-                        className={`block h-0.5 w-6 bg-black tranisiton-all duration-300 ${menuOpen ? "opacity-0" : "opacity-100"}`}
-                    />
-                    {/* btm bar slides up and rotates the other way crossing top one */}
-                    <span
-                        className={`block h-0.5 w-6 bg-black transition-all duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`}
-                    />
-                </button>
+                  {/* Cart + Signin (desktop) */}
+                  <div className="hidden md:flex items-center gap-3">
+                    <CartButton onClick={() => setCartOpen((s) => !s)} />
+                    <Button variant="ghost" size="sm" onClick={() => setSigninOpen(true)}>Sign In</Button>
+                  </div>
+
+                  {/* mobile hamburger */}
+                  {/* "md:hidden" is opposite of above, button only exists on phones aria-* attributes tell screen readers what the button does and whether menu is currently open */}
+                  <button
+                      type="button"
+                      aria-lable={menuOpen ? "Close menu" : "Open menu"}
+                      aria-expanded={menuOpen}
+                      // flip menu open/closed on each tap
+                      onClick={() => setMenuOpen(!menuOpen)}
+                      className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden">
+                      {/* 3 bars that morph into an x when menu is open */}
+                      {/* top bar slides dwn 21 units and rotates 45 degrees */}
+                      <span
+                          className={`block h-0.5 w-6 bg-black transition-all duration-300 ${menuOpen ? "translate-y-2 rotate-45" : ""}`}n                      />
+                      {/* middle bar simply fades out so x only has 2 strokes */}
+
+                      <span
+                          className={`block h-0.5 w-6 bg-black tranisiton-all duration-300 ${menuOpen ? "opacity-0" : "opacity-100"}`}n                      />
+                      {/* btm bar slides up and rotates the other way crossing top one */}
+                      <span
+                          className={`block h-0.5 w-6 bg-black transition-all duration-300 ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`}n                      />
+                  </button>
+                </div>
             </div>
-            {/* mobile menu */}
-            {/* AnimatePresence allows closing animation to play, without it the menu would vanish instantly when menuOpen becomes false */}
+
             <AnimatePresence>
-                {/* "menuOpen" && (..)" renders the menu ONLY when menuOpen is true */}
+                {/* "menuOpen" && (..)
+                    renders the menu ONLY when menuOpen is true */}
                 {menuOpen && (
-                    <motion.div
-                        //overflow-hidden hides links while panel is still sliding open so nothing spills mid animate
-                        className="overflow-hidden md:hidden"
-                        // animate panels height from 0 to natural size
-                        // "exit" happens on way out
-                        inital={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}>
+                    <motion.div className="overflow-hidden md:hidden" inital={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
                         {/* flex-col stacks mobile links vertically */}
                         <nav className="flex flex-col gap-4 px-6 pb-6 pt-2">
                             {/* every link calls closeMenu so tapping one both jumpsto the sextion AND closes the panel */}
-                            <a href="#home" onClick={closeMenu} className="text-base font-semibold">
-                                Home
-                            </a>
-                            <a href="#shop" onClick={closeMenu} className="text-base font-semibold">
-                                Shop Coffee
-                            </a>
+                            <a href="#home" onClick={closeMenu} className="text-base font-semibold">Home</a>
+                            <a href="#shop" onClick={closeMenu} className="text-base font-semibold">Shop Coffee</a>
                             <a
                                 href="#about"
                                 onClick={closeMenu}
@@ -220,5 +222,10 @@ export default function NavBar() {
                 )}
             </AnimatePresence>
         </motion.header>
+
+        {/* Cart panel & Sign-in modal rendered at top-level so they layer above layout */}
+        <CartPanel open={cartOpen} onClose={() => setCartOpen(false)} onRequestSignIn={() => { setSigninOpen(true); setCartOpen(false); }} />
+        <SignInModal open={signinOpen} onClose={() => setSigninOpen(false)} />
+        </>
     );
 }
