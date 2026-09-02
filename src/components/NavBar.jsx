@@ -160,7 +160,7 @@ export default function NavBar() {
                   {/* Cart + Signin (desktop) */}
                   <div className="hidden md:flex items-center gap-3">
                     <CartButton onClick={() => setCartOpen((s) => !s)} />
-                    <Button variant="ghost" size="sm" onClick={() => setSigninOpen(true)}>Sign In</Button>
+                                        <Button variant="accent" size="sm" onClick={() => setSigninOpen(true)}>Sign In</Button>
                   </div>
 
                   {/* mobile hamburger */}
